@@ -49,12 +49,12 @@ class RolloutGenerator(object):
 
             prepped_data = {k:torch.tensor(np.array([v]), device=self._env_device) for k, v in obs_history.items()}
             if not replay_ground_truth:
-                act_result = agent.act(step_signal.value, prepped_data,
+                act_result, _, info = agent.act(step_signal.value, prepped_data,
                                     deterministic=eval)
             else:
                 if step >= len(actions):
                     return
-                act_result = ActResult(actions[step])
+                act_result, _, info = ActResult(actions[step])
 
             # Convert to np if not already
             agent_obs_elems = {k: np.array(v) for k, v in
@@ -107,7 +107,7 @@ class RolloutGenerator(object):
 
             obs = dict(transition.observation)
 
-            yield replay_transition
+            yield replay_transition, info
 
             if transition.info.get("needs_reset", transition.terminal):
                 return

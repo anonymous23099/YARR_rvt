@@ -92,6 +92,7 @@ class IndependentEnvRunner(EnvRunner):
               save_metrics,
               cinematic_recorder_cfg):
         multi_task = isinstance(env_config[0], list)
+        # breakpoint()
         if multi_task:
             eval_env = CustomMultiTaskRLBenchEnv(
                 task_classes=env_config[0],
@@ -115,7 +116,7 @@ class IndependentEnvRunner(EnvRunner):
                 include_lang_goal_in_obs=env_config[6],
                 time_in_state=env_config[7],
                 record_every_n=env_config[8])
-
+        
         self._internal_env_runner = _IndependentEnvRunner(
             self._train_env, eval_env, self._agent, self._timesteps, self._train_envs,
             self._eval_envs, self._rollout_episodes, self._eval_episodes,
@@ -127,7 +128,7 @@ class IndependentEnvRunner(EnvRunner):
             self._weightsdir, self._logdir,
             self._env_device, self._previous_loaded_weight_folder,
             num_eval_runs=self._num_eval_runs)
-
+        
         stat_accumulator = SimpleAccumulator(eval_video_fps=30)
         self._internal_env_runner._run_eval_independent('eval_env',
                                                         stat_accumulator,

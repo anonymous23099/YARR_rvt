@@ -184,7 +184,7 @@ class _IndependentEnvRunner(_EnvRunner):
         new_transitions = {'train_envs': 0, 'eval_envs': 0}
         total_transitions = {'train_envs': 0, 'eval_envs': 0}
         current_task_id = -1
-
+        
         for n_eval in range(self._num_eval_runs):
             if rec_cfg.enabled:
                 tr._cam_motion.save_pose()
